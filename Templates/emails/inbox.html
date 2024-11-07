@@ -1,0 +1,16 @@
+<!-- emails/inbox.html -->
+{% extends 'emails/base.html' %}
+
+{% block content %}
+  <h2>Bandeja de Entrada</h2>
+  <ul>
+    {% for correo in correos_recibidos %}
+      <li>
+        <strong>Asunto:</strong> {{ correo.asunto }} - <strong>De:</strong> {{ correo.remitente.username }}
+        <a href="{% url 'ver_correo' correo.id %}">Ver</a>
+      </li>
+    {% empty %}
+      <li>No tienes correos.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

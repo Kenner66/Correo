@@ -1,0 +1,9 @@
+<!-- emails/ver_correo.html -->
+{% extends 'emails/base.html' %}
+
+{% block content %}
+  <h2>{{ correo.asunto }}</h2>
+  <p><strong>De:</strong> {{ correo.remitente.username }}</p>
+  <p><strong>Contenido:</strong></p>
+  <p>{{ correo.contenido }}</p>
+{% endblock %}

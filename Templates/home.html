@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido al módulo de correo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .titulo {
+            font-size: 24px;
+            color: #333;
+            margin-top: 20px;
+            max-width: 600px;
+            margin-left: 20px;
+            margin-right: 20px;
+            text-align: center;
+            line-height: 1.5; /* Espaciado entre líneas */
+        }
+        
+        .mensaje {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: 20px;
+            margin-right: 20px;
+            text-align: justify;
+            line-height: 1.8; /* Espaciado entre líneas */
+            padding: 20px; /* Espaciado interno */
+        }
+        
+        .btn-login {
+            background-color: #337ab7;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .btn-login:hover {
+            background-color: #23527c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="titulo">Bienvenido a tu cliente de correo</h2>
+        <p class="mensaje">Este módulo permite a los usuarios autenticarse en la plataforma mediante un inicio de sesión tradicional.
+             Además de las funcionalidades de correo tradicionales, como la gestión de mensajes, el módulo ofrece filtrado avanzado por
+              dominio de correo, permitiendo a los usuarios organizar y visualizar correos según su procedencia (e.g., correos de empresas
+               específicas). También incluye herramientas de análisis tipo Business Intelligence (BI) para generar informes y estadísticas 
+               sobre el uso del correo, volumen de mensajes por dominio y otros datos relevantes, proporcionando una visión detallada del
+                flujo de comunicación.</p>
+        <a href="{% url 'login' %}">
+            <button class="btn-login">Iniciar sesión</button>
+        </a>    
+    </div>
+</body>
+</html>

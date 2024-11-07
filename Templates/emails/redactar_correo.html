@@ -1,0 +1,12 @@
+<!-- emails/redactar_correo.html -->
+{% extends 'emails/base.html' %}
+
+{% block content %}
+  <h2>Redactar Correo</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Enviar Correo</button>
+  </form>
+{% endblock %}
