@@ -1,19 +1,112 @@
-
-
-<!-- users/templates/users/signup.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Usuario</title>
+    <style>
+        /* Estilos en general */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Estilos del contenedor de registro */
+        .register-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        /* Estilo del titulo del registro */
+        .register-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        /* Estilos para el formulario */
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Estilos de etiqetas */
+        label {
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #666;
+        }
+
+        /* Estilos para los inputs */
+        input[type="text"], input[type="password"], input[type="email"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        /* Estilos del botón de submit */
+        button[type="submit"] {
+            background-color: #337ab7;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* Estilos del botón de submit en hover */
+        button[type="submit"]:hover {
+            background-color: #23527c;
+        }
+
+        /* Estilos para el inicio de sesion */
+        .register-options {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .login-link {
+            text-decoration: none;
+            color: #337ab7;
+        }
+
+        .login-link:hover {
+            color: #23527c;
+        }
+    </style>
 </head>
 <body>
-    <h2>Registro de Usuario</h2>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Registrarse</button>
-    </form>
-    <p>¿Ya tienes una cuenta? <a href="{% url 'login' %}">Inicia sesión aquí</a>.</p>
+    <!-- Contenedor para el registro -->
+    <div class="register-container">
+        <h2 class="register-title">Registro de Usuario</h2>
+        <!-- Formulario del registro -->
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Registrarse</button>
+        </form>
+        <!--  Regresar al incio de sesion -->
+        <div class="register-options">
+            <p>¿Ya tienes una cuenta?</p>
+            <a href="{% url 'login' %}" class="login-link">
+                Inicia sesión aquí
+            </a>
+        </div>
+    </div>
 </body>
 </html>
+
