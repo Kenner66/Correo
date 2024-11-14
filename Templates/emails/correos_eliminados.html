@@ -1,10 +1,10 @@
-<!-- inbox.html -->
+<!-- correos_eliminados.html -->
 {% extends 'emails/base.html' %}
 
 {% block content %}
-<h2>Bandeja de Entrada</h2>
+<h2>Correos Eliminados</h2>
 
-{% if correos_recibidos %}
+{% if correos_eliminados %}
     <table>
         <thead>
             <tr>
@@ -15,21 +15,21 @@
             </tr>
         </thead>
         <tbody>
-            {% for correo in correos_recibidos %}
+            {% for correo in correos_eliminados %}
                 <tr>
                     <td>{{ correo.remitente }}</td>
                     <td>{{ correo.asunto }}</td>
                     <td>{{ correo.fecha_envio }}</td>
                     <td>
                         <a href="{% url 'ver_correo' correo.id %}">Ver</a> |
-                        <a href="{% url 'eliminar_correo_recibido' correo.id %}">Eliminar</a>
+                        <a href="{% url 'restaurar_correo' correo.id %}">Restaurar</a>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 {% else %}
-    <p>No tienes correos en tu bandeja de entrada.</p>
+    <p>No tienes correos eliminados.</p>
 {% endif %}
 
 {% endblock %}

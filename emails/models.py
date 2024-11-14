@@ -11,9 +11,12 @@ class Correo(models.Model):
     asunto = models.CharField(max_length=200)
     contenido = models.TextField()
     fecha_envio = models.DateTimeField(auto_now_add=True)
+    eliminado_por_remitente = models.BooleanField(default=False)  # Nuevo campo
+    eliminado_por_destinatario = models.BooleanField(default=False)  
+
 
     def __str__(self):
-        return self.asunto
+        return f"{self.asunto} - {self.remitente} -> {self.destinatario}"
 
 
 class Destinatario(models.Model):

@@ -1,35 +1,34 @@
-<!-- inbox.html -->
+<!-- correos_enviados.html -->
 {% extends 'emails/base.html' %}
 
 {% block content %}
-<h2>Bandeja de Entrada</h2>
+<h2>Correos Enviados</h2>
 
-{% if correos_recibidos %}
+{% if correos_enviados %}
     <table>
         <thead>
             <tr>
-                <th>Remitente</th>
+                <th>Destinatario</th>
                 <th>Asunto</th>
                 <th>Fecha de Envío</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            {% for correo in correos_recibidos %}
+            {% for correo in correos_enviados %}
                 <tr>
-                    <td>{{ correo.remitente }}</td>
+                    <td>{{ correo.destinatario }}</td>
                     <td>{{ correo.asunto }}</td>
                     <td>{{ correo.fecha_envio }}</td>
                     <td>
-                        <a href="{% url 'ver_correo' correo.id %}">Ver</a> |
-                        <a href="{% url 'eliminar_correo_recibido' correo.id %}">Eliminar</a>
+                        <a href="{% url 'ver_correo' correo.id %}">Ver</a>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 {% else %}
-    <p>No tienes correos en tu bandeja de entrada.</p>
+    <p>No has enviado ningún correo.</p>
 {% endif %}
 
 {% endblock %}
