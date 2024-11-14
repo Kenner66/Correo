@@ -5,15 +5,23 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+class Prioridad(models.Model):
+    nivel = models.CharField(max_length=50)  # Ej: "Alta", "Media", "Baja"
+    descripcion = models.TextField(blank=True, null=True)  # Descripción opcional
+
+    def __str__(self):
+        return self.nivel
+    
 class Correo(models.Model):
     remitente = models.ForeignKey(User, on_delete=models.CASCADE, related_name="enviados")
-    destinatario = models.ForeignKey(User, on_delete=models.CASCADE, related_name="correos_recibidos")  # Mantienes la relación ManyToMany
+    destinatario = models.ForeignKey(User, on_delete=models.CASCADE, related_name="correos_recibidos") 
     asunto = models.CharField(max_length=200)
     contenido = models.TextField()
     fecha_envio = models.DateTimeField(auto_now_add=True)
-    eliminado_por_remitente = models.BooleanField(default=False)  # Nuevo campo
+    eliminado_por_remitente = models.BooleanField(default=False)  
     eliminado_por_destinatario = models.BooleanField(default=False)  
-
+    prioridad = models.ForeignKey(Prioridad, on_delete=models.SET_NULL, null=True, blank=True)  # Clave foránea
+    leido = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.asunto} - {self.remitente} -> {self.destinatario}"

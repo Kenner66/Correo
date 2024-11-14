@@ -141,7 +141,7 @@
         <a href="{%url 'redactar_correo'%}">Redactar Correo</a>
         <a href="{% url 'inbox' %}">Todos los Correos</a>
         <a href="#">No leídos</a>
-        <a href="#">Importantes</a>
+        <a href="{% url 'correos_alta_prioridad' %}">Importantes</a>
         <a href="{% url 'correos_enviados' %}">Enviados</a>
         <a href="{% url 'correos_eliminados' %}">Papelera</a>
         <a href="#">Filtrar por Dominio</a>

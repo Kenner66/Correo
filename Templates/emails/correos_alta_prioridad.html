@@ -1,0 +1,29 @@
+<!-- correos_alta_prioridad.html -->
+{% extends 'emails/base.html' %}
+
+{% block content %}
+<h2>Correos de Alta Prioridad</h2>
+
+{% if correos_alta_prioridad %}
+    <table>
+        <thead>
+            <tr>
+                <th>Remitente</th>
+                <th>Asunto</th>
+                <th>Fecha de Recepción</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for correo in correos_alta_prioridad %}
+                <tr>
+                    <td>{{ correo.remitente }}</td>
+                    <td>{{ correo.asunto }}</td>
+                    <td>{{ correo.fecha_envio }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No tienes correos de alta prioridad.</p>
+{% endif %}
+{% endblock %}

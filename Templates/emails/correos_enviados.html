@@ -10,6 +10,7 @@
             <tr>
                 <th>Destinatario</th>
                 <th>Asunto</th>
+                <th>Prioridad</th>
                 <th>Fecha de Envío</th>
                 <th>Acciones</th>
             </tr>
@@ -19,6 +20,7 @@
                 <tr>
                     <td>{{ correo.destinatario }}</td>
                     <td>{{ correo.asunto }}</td>
+                    <td>{{ correo.prioridad }}</td>
                     <td>{{ correo.fecha_envio }}</td>
                     <td>
                         <a href="{% url 'ver_correo' correo.id %}">Ver</a>

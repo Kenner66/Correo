@@ -6,6 +6,13 @@ from .models import Correo, User
 from django.contrib.auth import get_user_model
 from .forms import RedactarCorreoForm  # Vamos a crear este formulario
 from django.shortcuts import get_object_or_404
+@login_required
+def correos_alta_prioridad_view(request):
+    # Filtrar los correos de alta prioridad
+    correos_alta_prioridad = Correo.objects.filter(destinatario=request.user, prioridad__nivel="Alta")
+    return render(request, 'emails/correos_alta_prioridad.html', {
+        'correos_alta_prioridad': correos_alta_prioridad,
+    })
 
 @login_required
 def restaurar_correo(request, correo_id):

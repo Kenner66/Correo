@@ -14,8 +14,9 @@ class RedactarCorreoForm(forms.ModelForm):
 
     class Meta:
         model = Correo
-        fields = ['destinatario', 'asunto', 'contenido']
+        fields = ['prioridad','destinatario', 'asunto', 'contenido']
         widgets = {
+            'prioridad': forms.Select(),
             'asunto': forms.TextInput(attrs={'placeholder': 'Asunto'}),
             'contenido': forms.Textarea(attrs={'placeholder': 'Escribe tu mensaje aquí'}),
         }

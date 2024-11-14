@@ -10,4 +10,5 @@ urlpatterns = [
     path('correos-enviados/', views.correos_enviados_view, name='correos_enviados'),
     path('correos-eliminados/', views.correos_eliminados_view, name='correos_eliminados'),
     path('restaurar-correo/<int:correo_id>/', views.restaurar_correo, name='restaurar_correo'),
+    path('correos-alta-prioridad/', views.correos_alta_prioridad_view, name='correos_alta_prioridad'),
 ]
