@@ -54,6 +54,9 @@ def correos_enviados_view(request):
 @login_required
 def ver_correo(request, correo_id):
     correo = Correo.objects.get(id=correo_id)
+    if correo.destinatario == request.user and not correo.leido:
+        correo.leido = True
+        correo.save()
     return render(request, 'emails/ver_correo.html', {'correo': correo})
 
 @login_required
