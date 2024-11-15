@@ -26,15 +26,6 @@ class Correo(models.Model):
     def __str__(self):
         return f"{self.asunto} - {self.remitente} -> {self.destinatario}"
 
-
-class Destinatario(models.Model):
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name="correos_destinatarios")  # Cambio en related_name
-    correo = models.ForeignKey(Correo, on_delete=models.CASCADE, related_name="destinatarios_correo")  # Cambio en related_name
-
-    def __str__(self):
-        return f"{self.usuario} - {self.correo.asunto}"
-
-
 class ArchivoAdjunto(models.Model):
     correo = models.ForeignKey(Correo, on_delete=models.CASCADE, related_name='archivos_adjuntos')
     nombre_archivo = models.CharField(max_length=255)

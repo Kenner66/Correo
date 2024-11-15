@@ -1,14 +1,28 @@
-<!-- correos_enviados.html -->
-{% extends 'emails/base.html' %}
+{% extends "emails/base.html" %}
+
+{% block title %}Filtrar Correos por Dominio{% endblock %}
 
 {% block content %}
-<h2>Correos Enviados</h2>
+<h2>Filtrar Correos por Dominio</h2>
 
-{% if correos_enviados %}
+<form method="get" style="margin-bottom: 20px;">
+    <label for="dominio" style="font-weight: bold; color: #333;">Selecciona un dominio:</label>
+    <select name="dominio" id="dominio" style="padding: 5px; font-size: 14px; border: 1px solid #ddd; border-radius: 5px;">
+        <option value="">--Seleccionar--</option>
+        {% for dominio in dominios %}
+            <option value="{{ dominio }}" {% if dominio == dominio_seleccionado %}selected{% endif %}>{{ dominio }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit" style="padding: 5px 15px; font-size: 14px; color: #fff; background-color: #007bff; border: none; border-radius: 5px; cursor: pointer;">Filtrar</button>
+</form>
+
+<h3>Correos filtrados por dominio: {{ dominio_seleccionado }}</h3>
+
+{% if correos %}
     <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
         <thead>
             <tr style="background-color: #f4f4f4; color: #333;">
-                <th style="padding: 10px; text-align: left;">Destinatario</th>
+                <th style="padding: 10px; text-align: left;">Remitente</th>
                 <th style="padding: 10px; text-align: left;">Asunto</th>
                 <th style="padding: 10px; text-align: left;">Prioridad</th>
                 <th style="padding: 10px; text-align: left;">Fecha de Envío</th>
@@ -16,9 +30,9 @@
             </tr>
         </thead>
         <tbody>
-            {% for correo in correos_enviados %}
+            {% for correo in correos %}
                 <tr style="border-bottom: 1px solid #ddd;">
-                    <td style="padding: 8px;">{{ correo.destinatario }}</td>
+                    <td style="padding: 8px;">{{ correo.remitente.username }}</td>
                     <td style="padding: 8px;">
                         <a href="{% url 'ver_correo' correo.id %}" style="text-decoration: none; color: #007bff;">
                             {{ correo.asunto }}
@@ -34,7 +48,6 @@
         </tbody>
     </table>
 {% else %}
-    <p>No has enviado ningún correo.</p>
+    <p style="color: #888;">No hay correos para el dominio seleccionado.</p>
 {% endif %}
-
 {% endblock %}

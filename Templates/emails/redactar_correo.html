@@ -4,9 +4,65 @@
 {% block content %}
   <h2>Redactar Correo</h2>
 
-  <form method="post">
+  <form method="post" class="form-redactar-correo">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Enviar Correo</button>
+    <button type="submit" class="btn-enviar">Enviar Correo</button>
   </form>
+
+  <style>
+    /* CSS para el formulario de redacción de correo */
+    .form-redactar-correo {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+    }
+
+    .form-redactar-correo h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .form-redactar-correo div {
+        margin-bottom: 15px;
+    }
+
+    .form-redactar-correo label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-redactar-correo input, .form-redactar-correo textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+
+    .form-redactar-correo textarea {
+        height: 150px;
+    }
+
+    .btn-enviar {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .btn-enviar:hover {
+        background-color: #0056b3;
+    }
+  </style>
 {% endblock %}

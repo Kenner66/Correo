@@ -5,20 +5,28 @@
 <h2>Correos de Alta Prioridad</h2>
 
 {% if correos_alta_prioridad %}
-    <table>
+    <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
         <thead>
-            <tr>
-                <th>Remitente</th>
-                <th>Asunto</th>
-                <th>Fecha de Recepción</th>
+            <tr style="background-color: #f4f4f4; color: #333;">
+                <th style="padding: 10px; text-align: left;">Remitente</th>
+                <th style="padding: 10px; text-align: left;">Asunto</th>
+                <th style="padding: 10px; text-align: left;">Fecha de Recepción</th>
+                <th style="padding: 10px; text-align: center;">Acciones</th>
             </tr>
         </thead>
         <tbody>
             {% for correo in correos_alta_prioridad %}
-                <tr>
-                    <td>{{ correo.remitente }}</td>
-                    <td>{{ correo.asunto }}</td>
-                    <td>{{ correo.fecha_envio }}</td>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 8px;">{{ correo.remitente }}</td>
+                    <td style="padding: 8px;">
+                        <a href="{% url 'ver_correo' correo.id %}" style="text-decoration: none; color: #007bff;">
+                            {{ correo.asunto }}
+                        </a>
+                    </td>
+                    <td style="padding: 8px;">{{ correo.fecha_envio }}</td>
+                    <td style="padding: 8px; text-align: center;">
+                        <a href="{% url 'ver_correo' correo.id %}" style="text-decoration: none; color: #007bff;">Ver</a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
@@ -26,4 +34,5 @@
 {% else %}
     <p>No tienes correos de alta prioridad.</p>
 {% endif %}
+
 {% endblock %}

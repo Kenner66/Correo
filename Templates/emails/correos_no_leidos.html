@@ -1,40 +1,39 @@
-<!-- correos_enviados.html -->
+<!-- correos_no_leidos.html -->
 {% extends 'emails/base.html' %}
 
 {% block content %}
-<h2>Correos Enviados</h2>
+<h2>Correos No Leídos</h2>
 
-{% if correos_enviados %}
+{% if correos_no_leidos %}
     <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
         <thead>
             <tr style="background-color: #f4f4f4; color: #333;">
-                <th style="padding: 10px; text-align: left;">Destinatario</th>
+                <th style="padding: 10px; text-align: left;">Remitente</th>
                 <th style="padding: 10px; text-align: left;">Asunto</th>
-                <th style="padding: 10px; text-align: left;">Prioridad</th>
                 <th style="padding: 10px; text-align: left;">Fecha de Envío</th>
                 <th style="padding: 10px; text-align: center;">Acciones</th>
             </tr>
         </thead>
         <tbody>
-            {% for correo in correos_enviados %}
-                <tr style="border-bottom: 1px solid #ddd;">
-                    <td style="padding: 8px;">{{ correo.destinatario }}</td>
+            {% for correo in correos_no_leidos %}
+                <tr style="border-bottom: 1px solid #ddd; background-color: #f9f9f9;">
+                    <td style="padding: 8px;">{{ correo.remitente }}</td>
                     <td style="padding: 8px;">
                         <a href="{% url 'ver_correo' correo.id %}" style="text-decoration: none; color: #007bff;">
                             {{ correo.asunto }}
                         </a>
                     </td>
-                    <td style="padding: 8px;">{{ correo.prioridad }}</td>
                     <td style="padding: 8px;">{{ correo.fecha_envio }}</td>
                     <td style="padding: 8px; text-align: center;">
-                        <a href="{% url 'ver_correo' correo.id %}" style="text-decoration: none; color: #007bff;">Ver</a>
+                        <a href="{% url 'ver_correo' correo.id %}" style="text-decoration: none; color: #007bff;">Ver</a> |
+                        <a href="{% url 'eliminar_correo_recibido' correo.id %}" style="text-decoration: none; color: #dc3545;">Eliminar</a>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 {% else %}
-    <p>No has enviado ningún correo.</p>
+    <p>No tienes correos no leídos.</p>
 {% endif %}
 
 {% endblock %}

@@ -1,6 +1,5 @@
 <!-- inbox.html -->
 {% extends 'emails/base.html' %}
-
 {% block content %}
 <h2>Bandeja de Entrada</h2>
 
@@ -16,7 +15,7 @@
         </thead>
         <tbody>
             {% for correo in correos_recibidos %}
-                <tr {% if correo.leido %} style="background-color: #aca8a8;" {% endif %} style="border-bottom: 1px solid #ddd;">
+                <tr {% if correo.leido %} style="background-color: #e7e7e7;" {% endif %} style="border-bottom: 1px solid #ddd;">
                     <td style="padding: 8px;">{{ correo.remitente }}</td>
                     <td style="padding: 8px;">
                         <a href="{% url 'ver_correo' correo.id %}" style="text-decoration: none; color: #007bff;">
@@ -26,7 +25,10 @@
                     <td style="padding: 8px;">{{ correo.fecha_envio }}</td>
                     <td style="padding: 8px; text-align: center;">
                         <a href="{% url 'ver_correo' correo.id %}" style="text-decoration: none; color: #007bff;">Ver</a> |
-                        <a href="{% url 'eliminar_correo_recibido' correo.id %}" style="text-decoration: none; color: #dc3545;">Eliminar</a>
+                        <a href="{% url 'eliminar_correo_recibido' correo.id %}" style="text-decoration: none; color: #dc3545;">Eliminar</a> |
+                        {% if correo.leido %}
+                        <a href="{% url 'marcar_como_no_leido' correo.id %}" style="text-decoration: none; color: #dc3545;">Marcar como no leído</a>
+                    {% endif %}
                     </td>
                 </tr>
             {% endfor %}
