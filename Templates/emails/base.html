@@ -129,8 +129,7 @@
         </div>
         <a href="{% url 'inbox' %}">Inicio</a>
         <a href="{% url 'filtrar_por_dominio' %}">Filtros por Dominio</a>
-        <a href="#">Análisis BI</a>
-        <a href="#">Configuración</a>
+        <a href="{% url 'dashboard' %}">Análisis BI</a>
         
         <form action="{% url 'logout' %}" method="post" style="display: inline;">
             {% csrf_token %}

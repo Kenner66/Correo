@@ -1,0 +1,64 @@
+{% extends 'emails/base.html' %}
+
+{% block content %}
+<h2 class="text-center my-4">Dashboard</h2>
+
+<style>
+    /* Contenedor de cada gráfico */
+    .chart-container {
+        background-color: #f9f9f9; /* Fondo suave */
+        padding: 20px;
+        border-radius: 15px; /* Bordes redondeados */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+        text-align: center;
+    }
+
+    /* Títulos de los gráficos */
+    .chart-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #007bff;
+        margin-bottom: 15px; /* Espacio debajo del título */
+    }
+
+    /* Asegurarse de que las imágenes se ajusten */
+    .img-fluid {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px; /* Bordes redondeados para la imagen */
+    }
+
+    /* Espaciado entre los gráficos */
+    .row {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    /* Espaciado entre los gráficos y el contenido */
+    .mb-4 {
+        margin-bottom: 30px; /* Margen inferior más grande para dar espacio */
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <!-- Primer gráfico: Correos por Prioridad -->
+        <div class="col-md-6 mb-4">
+            <div class="chart-container">
+                <h3 class="chart-title">Correos por Prioridad</h3>
+                <img src="data:image/png;base64,{{ grafico_prioridad }}" alt="Gráfico de Prioridades" class="img-fluid">
+            </div>
+        </div>
+
+        <!-- Segundo gráfico: Correos por Categoría -->
+        <div class="col-md-6 mb-4">
+            <div class="chart-container">
+                <h3 class="chart-title">Correos por Categoría</h3>
+                <img src="data:image/png;base64,{{ grafico_categoria }}" alt="Gráfico de Categorías" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
