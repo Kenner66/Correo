@@ -1,6 +1,8 @@
 
 from django.urls import path
 from . import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('inbox/', views.inbox_view, name='inbox'),
@@ -16,3 +18,5 @@ urlpatterns = [
     path('filtrar-por-dominio/', views.filtrar_por_dominio, name='filtrar_por_dominio'),
     path('dashboard/', views.dashboard_view, name='dashboard'),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,70 +1,193 @@
 {% extends 'emails/base.html' %}
 {% block content %}
-<h2>Bandeja de Entrada</h2>
+<style>
+  /* Estilo general para la bandeja de entrada */
+  .bandeja-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
 
-{% if correos_clasificados %}
+  /* Títulos */
+  h2 {
+    font-size: 28px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    font-size: 22px;
+    color: #007bff;
+    margin-top: 30px;
+    margin-bottom: 10px;
+  }
+
+  /* Tabla de correos */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+
+  th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  th {
+    background-color: #f4f4f4;
+    color: #555;
+  }
+
+  td {
+    font-size: 16px;
+  }
+
+  td a {
+    text-decoration: none;
+    color: #007bff;
+  }
+
+  /* Estilos para las filas leídas y no leídas */
+  .leido {
+    background-color: #f0f0f0;
+  }
+
+  .no-leido {
+    background-color: #ffffff;
+  }
+
+  /* Estilos de prioridad */
+  .prioridad {
+    font-weight: bold;
+  }
+
+  .prioridad-alta {
+    color: #dc3545;
+  }
+
+  .prioridad-media {
+    color: #ffc107;
+  }
+
+  .prioridad-baja {
+    color: #28a745;
+  }
+
+  .prioridad-sin {
+    color: #6c757d;
+  }
+
+  /* Paginación */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+
+  .pagination a {
+    text-decoration: none;
+    color: #007bff;
+    margin: 0 5px;
+    padding: 8px 16px;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+
+  .pagination a:hover {
+    background-color: #007bff;
+    color: #fff;
+  }
+
+  .pagination span {
+    margin: 0 10px;
+    color: #333;
+  }
+
+  .pagination a:disabled {
+    color: #ccc;
+    border-color: #ccc;
+    pointer-events: none;
+  }
+
+  /* Estilo para los iconos */
+  .acciones a {
+    color: #007bff;
+    font-size: 18px;
+    margin: 0 5px;
+  }
+
+  .acciones a:hover {
+    color: #0056b3;
+  }
+</style>
+
+<div class="bandeja-container">
+  <h2>Bandeja de Entrada</h2>
+
+  {% if correos_clasificados %}
     {% for categoria, page_obj in correos_clasificados.items %}
-        <h3>{{ categoria }}</h3>
-        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
-            <thead>
-                <tr style="background-color: #f4f4f4; color: #333;">
-                    <th style="padding: 10px; text-align: left;">Remitente</th>
-                    <th style="padding: 10px; text-align: left;">Asunto</th>
-                    <th style="padding: 10px; text-align: left;">Prioridad</th>
-                    <th style="padding: 10px; text-align: left;">Fecha de Envío</th>
-                    <th style="padding: 10px; text-align: center;">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for correo in page_obj %}
-                    <tr {% if correo.leido %} style="background-color: #e7e7e7;" {% endif %} style="border-bottom: 1px solid #ddd;">
-                        <td style="padding: 8px;">{{ correo.remitente }}</td>
-                        <td style="padding: 8px;">
-                            <a href="{% url 'ver_correo' correo.id %}" style="text-decoration: none; color: #007bff;">
-                                {{ correo.asunto }}
-                            </a>
-                        </td>
-                        <td style="padding: 8px; font-weight: bold;">
-                            {% if correo.prioridad.nivel == 'Alta' %}
-                                <span style="color: #dc3545;">Alta</span>
-                            {% elif correo.prioridad.nivel == 'Media' %}
-                                <span style="color: #ffc107;">Media</span>
-                            {% elif correo.prioridad.nivel == 'Baja' %}
-                                <span style="color: #28a745;">Baja</span>
-                            {% else %}
-                                Sin prioridad
-                            {% endif %}
-                        </td>
-                        <td style="padding: 8px;">{{ correo.fecha_envio }}</td>
-                        <td style="padding: 8px; text-align: center;">
-                            <a href="{% url 'ver_correo' correo.id %}" style="text-decoration: none; color: #007bff;">Ver</a> |
-                            <a href="{% url 'eliminar_correo_recibido' correo.id %}" style="text-decoration: none; color: #dc3545;">Eliminar</a> |
-                            {% if correo.leido %}
-                                <a href="{% url 'marcar_como_no_leido' correo.id %}" style="text-decoration: none; color: #dc3545;">Marcar como no leído</a>
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+      <h3>{{ categoria }}</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Remitente</th>
+            <th>Asunto</th>
+            <th>Prioridad</th>
+            <th>Fecha de Envío</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for correo in page_obj %}
+            <tr class="{% if correo.leido %}leido{% else %}no-leido{% endif %}">
+              <td>{{ correo.remitente }}</td>
+              <td>
+                <a href="{% url 'ver_correo' correo.id %}">{{ correo.asunto }}</a>
+              </td>
+              <td class="prioridad {% if correo.prioridad.nivel == 'Alta' %}prioridad-alta{% elif correo.prioridad.nivel == 'Media' %}prioridad-media{% elif correo.prioridad.nivel == 'Baja' %}prioridad-baja{% else %}prioridad-sin{% endif %}">
+                {% if correo.prioridad.nivel %}
+                  {{ correo.prioridad.nivel }}
+                {% else %}
+                  Sin prioridad
+                {% endif %}
+              </td>
+              <td>{{ correo.fecha_envio }}</td>
+              <td class="acciones">
+                <a href="{% url 'ver_correo' correo.id %}" title="Ver Correo"><i class="fas fa-eye"></i></a> |
+                <a href="{% url 'eliminar_correo_recibido' correo.id %}" title="Eliminar Correo"><i class="fas fa-trash-alt"></i></a> |
+                {% if correo.leido %}
+                  <a href="{% url 'marcar_como_no_leido' correo.id %}" title="Marcar como No Leído"><i class="fas fa-envelope-open-text"></i></a>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
 
-        <!-- Controles de paginación para la categoría -->
-        <div class="pagination" style="margin-top: 20px;">
-            {% if page_obj.has_previous %}
-                <a href="?page_{{ categoria }}=1">&laquo; Primero</a>
-                <a href="?page_{{ categoria }}={{ page_obj.previous_page_number }}">Anterior</a>
-            {% endif %}
-
-            <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
-
-            {% if page_obj.has_next %}
-                <a href="?page_{{ categoria }}={{ page_obj.next_page_number }}">Siguiente</a>
-                <a href="?page_{{ categoria }}={{ page_obj.paginator.num_pages }}">Último &raquo;</a>
-            {% endif %}
-        </div>
+      <!-- Paginación -->
+      <div class="pagination">
+        {% if page_obj.has_previous %}
+          <a href="?page_{{ categoria }}=1">&laquo; Primero</a>
+          <a href="?page_{{ categoria }}={{ page_obj.previous_page_number }}">Anterior</a>
+        {% endif %}
+        <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}
+          <a href="?page_{{ categoria }}={{ page_obj.next_page_number }}">Siguiente</a>
+          <a href="?page_{{ categoria }}={{ page_obj.paginator.num_pages }}">Último &raquo;</a>
+        {% endif %}
+      </div>
     {% endfor %}
-{% else %}
+  {% else %}
     <p>No tienes correos en tu bandeja de entrada.</p>
-{% endif %}
+  {% endif %}
+</div>
 
 {% endblock %}

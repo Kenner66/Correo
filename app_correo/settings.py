@@ -73,6 +73,12 @@ TEMPLATES = [
     },
 ]
 
+import os
+
+# Configuración para subir archivos
+MEDIA_URL = '/media/'  # La URL pública para acceder a los archivos subidos
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Carp
+
 WSGI_APPLICATION = 'app_correo.wsgi.application'
 
 

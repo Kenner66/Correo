@@ -1,38 +1,161 @@
-<!-- correos_alta_prioridad.html -->
 {% extends 'emails/base.html' %}
 
 {% block content %}
-<h2>Correos de Alta Prioridad</h2>
+<style>
+  /* Estilo general para correos de alta prioridad */
+  .correos-alta-prioridad-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
 
-{% if correos_alta_prioridad %}
-    <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
-        <thead>
-            <tr style="background-color: #f4f4f4; color: #333;">
-                <th style="padding: 10px; text-align: left;">Remitente</th>
-                <th style="padding: 10px; text-align: left;">Asunto</th>
-                <th style="padding: 10px; text-align: left;">Fecha de Recepción</th>
-                <th style="padding: 10px; text-align: center;">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for correo in correos_alta_prioridad %}
-                <tr style="border-bottom: 1px solid #ddd;">
-                    <td style="padding: 8px;">{{ correo.remitente }}</td>
-                    <td style="padding: 8px;">
-                        <a href="{% url 'ver_correo' correo.id %}" style="text-decoration: none; color: #007bff;">
-                            {{ correo.asunto }}
-                        </a>
-                    </td>
-                    <td style="padding: 8px;">{{ correo.fecha_envio }}</td>
-                    <td style="padding: 8px; text-align: center;">
-                        <a href="{% url 'ver_correo' correo.id %}" style="text-decoration: none; color: #007bff;">Ver</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
+  /* Títulos */
+  h2 {
+    font-size: 28px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  /* Tabla de correos de alta prioridad */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+
+  th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  th {
+    background-color: #f4f4f4;
+    color: #555;
+  }
+
+  td {
+    font-size: 16px;
+  }
+
+  td a {
+    text-decoration: none;
+    color: #007bff;
+  }
+
+  td a:hover {
+    text-decoration: underline;
+  }
+
+  /* Resaltar correos de alta prioridad */
+  .prioridad-alta {
+    background-color: #4caf50; /* Verde */
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 4px;
+  }
+
+  /* Estilo de la acción Ver */
+  .acciones a {
+    color: #007bff;
+    font-size: 18px;
+    margin: 0 10px;
+    padding: 8px 15px;
+    border-radius: 5px;
+    border: 1px solid #007bff;
+    transition: background-color 0.3s ease;
+  }
+
+  .acciones a:hover {
+    background-color: #007bff;
+    color: white;
+  }
+
+  /* Paginación */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+
+  .pagination a {
+    text-decoration: none;
+    color: #007bff;
+    margin: 0 5px;
+    padding: 8px 16px;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+
+  .pagination a:hover {
+    background-color: #007bff;
+    color: #fff;
+  }
+
+  .pagination span {
+    margin: 0 10px;
+    color: #333;
+  }
+
+  .pagination a:disabled {
+    color: #ccc;
+    border-color: #ccc;
+    pointer-events: none;
+  }
+</style>
+
+<div class="correos-alta-prioridad-container">
+  <h2>Correos de Alta Prioridad</h2>
+
+  {% if correos_alta_prioridad %}
+    <table>
+      <thead>
+        <tr>
+          <th>Remitente</th>
+          <th>Asunto</th>
+          <th>Fecha de Recepción</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for correo in correos_alta_prioridad %}
+          <tr>
+            <td>{{ correo.remitente }}</td>
+            <td>
+              <a href="{% url 'ver_correo' correo.id %}">{{ correo.asunto }}</a>
+            </td>
+            <td>{{ correo.fecha_envio }}</td>
+            <td class="acciones">
+              <a href="{% url 'ver_correo' correo.id %}" title="Ver Correo"><i class="fas fa-eye"></i> Ver</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
     </table>
-{% else %}
+  {% else %}
     <p>No tienes correos de alta prioridad.</p>
-{% endif %}
+  {% endif %}
+
+  <!-- Paginación -->
+  <div class="pagination">
+    {% if correos_alta_prioridad.has_previous %}
+      <a href="?page=1">&laquo; Primero</a>
+      <a href="?page={{ correos_alta_prioridad.previous_page_number }}">Anterior</a>
+    {% endif %}
+    <span>Página {{ correos_alta_prioridad.number }} de {{ correos_alta_prioridad.paginator.num_pages }}</span>
+    {% if correos_alta_prioridad.has_next %}
+      <a href="?page={{ correos_alta_prioridad.next_page_number }}">Siguiente</a>
+      <a href="?page={{ correos_alta_prioridad.paginator.num_pages }}">Último &raquo;</a>
+    {% endif %}
+  </div>
+</div>
 
 {% endblock %}

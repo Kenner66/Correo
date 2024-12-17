@@ -1,9 +1,172 @@
-<!-- emails/ver_correo.html -->
 {% extends 'emails/base.html' %}
 
 {% block content %}
-  <h2>{{ correo.asunto }}</h2>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7fc;
+  }
+
+  .email-container {
+    background: #ffffff;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .email-header {
+    background: linear-gradient(135deg, #007bff, #00d4ff);
+    padding: 15px;
+    color: #ffffff;
+    border-radius: 10px 10px 0 0;
+    text-align: center;
+    position: relative;
+  }
+
+  .email-header h2 {
+    font-size: 26px;
+    margin: 0;
+  }
+
+  .email-header::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    left: -40px;
+    width: 100px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+  }
+
+  .email-header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px;
+    right: -40px;
+    width: 120px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+  }
+
+  p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+    margin: 10px 0;
+  }
+
+  strong {
+    color: #333;
+  }
+
+  .attachments {
+    margin-top: 20px;
+  }
+
+  .attachments h3 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  .attachments ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .attachments li {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .attachments li img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+  }
+
+  .attachments a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+  }
+
+  .attachments a:hover {
+    text-decoration: underline;
+  }
+
+  .no-attachments {
+    color: #777;
+    font-style: italic;
+  }
+
+  .back-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+
+  .back-button:hover {
+    background-color: #0056b3;
+  }
+
+  .decorative-figure {
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 120px;
+    height: 120px;
+    background: rgba(0, 123, 255, 0.1);
+    border-radius: 50%;
+    z-index: -1;
+  }
+</style>
+
+<div class="email-container">
+  <div class="email-header">
+    <h2>{{ correo.asunto }}</h2>
+  </div>
+
   <p><strong>De:</strong> {{ correo.remitente.username }}</p>
   <p><strong>Contenido:</strong></p>
   <p>{{ correo.contenido }}</p>
+
+  <div class="attachments">
+    <h3>Archivos Adjuntos:</h3>
+    <ul>
+      {% for archivo in archivos_adjuntos %}
+        <li>
+          <img src="https://img.icons8.com/fluency/48/000000/file.png" alt="Archivo">
+          <a href="{{ archivo.ruta_archivo.url }}" download>{{ archivo.nombre_archivo }}</a>
+        </li>
+      {% empty %}
+        <li class="no-attachments">No hay archivos adjuntos.</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <a href="#" class="back-button" onclick="goBack()">Volver</a>
+</div>
+
+<script>
+  function goBack() {
+    window.history.back();
+  }
+</script>
 {% endblock %}

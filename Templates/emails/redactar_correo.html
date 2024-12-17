@@ -1,68 +1,122 @@
-<!-- emails/redactar_correo.html -->
 {% extends 'emails/base.html' %}
 
 {% block content %}
-  <h2>Redactar Correo</h2>
+<style>
+  /* Estilo general para el contenedor */
+  .form-redactar-correo {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 25px 20px;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
 
-  <form method="post" class="form-redactar-correo">
+  /* Encabezado decorativo */
+  .form-redactar-correo h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Figura decorativa en el fondo */
+  .form-redactar-correo::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 150px;
+    height: 150px;
+    background: rgba(0, 123, 255, 0.1);
+    border-radius: 50%;
+  }
+
+  .form-redactar-correo::after {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    left: -50px;
+    width: 120px;
+    height: 120px;
+    background: rgba(0, 123, 255, 0.1);
+    border-radius: 50%;
+  }
+
+  /* Diseño de etiquetas e inputs */
+  .form-redactar-correo label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+  }
+
+  .form-redactar-correo input,
+  .form-redactar-correo textarea,
+  .form-redactar-correo select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+  }
+
+  .form-redactar-correo input:focus,
+  .form-redactar-correo textarea:focus,
+  .form-redactar-correo select:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+
+  .form-redactar-correo textarea {
+    height: 150px;
+  }
+
+  /* Botón de envío */
+  .btn-enviar {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    background: linear-gradient(90deg, #007bff, #0056b3);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background 0.3s ease-in-out;
+  }
+
+  .btn-enviar:hover {
+    background: linear-gradient(90deg, #0056b3, #003f7f);
+  }
+
+  /* Mensaje de éxito (si lo incluyes dinámicamente) */
+  .success-message {
+    text-align: center;
+    color: #28a745;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+</style>
+
+<div class="form-redactar-correo">
+  <h2>Redactar Correo</h2>
+  <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn-enviar">Enviar Correo</button>
+    <div>
+      <label for="id_archivos_adjuntos">Adjuntar archivos:</label>
+      {{ form.archivos_adjuntos }}
+    </div>
+    <button type="submit" class="btn-enviar">Enviar</button>
   </form>
-
-  <style>
-    /* CSS para el formulario de redacción de correo */
-    .form-redactar-correo {
-        max-width: 600px;
-        margin: 0 auto;
-        padding: 20px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        background-color: #f9f9f9;
-    }
-
-    .form-redactar-correo h2 {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    .form-redactar-correo div {
-        margin-bottom: 15px;
-    }
-
-    .form-redactar-correo label {
-        font-weight: bold;
-        display: block;
-        margin-bottom: 5px;
-    }
-
-    .form-redactar-correo input, .form-redactar-correo textarea {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 16px;
-        box-sizing: border-box;
-    }
-
-    .form-redactar-correo textarea {
-        height: 150px;
-    }
-
-    .btn-enviar {
-        padding: 10px 20px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        font-size: 16px;
-        cursor: pointer;
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    .btn-enviar:hover {
-        background-color: #0056b3;
-    }
-  </style>
+</div>
 {% endblock %}

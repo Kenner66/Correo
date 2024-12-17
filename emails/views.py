@@ -17,6 +17,7 @@ from .models import Correo
 from django.contrib.auth.decorators import login_required
 from django.db import models
 import matplotlib
+from .models import ArchivoAdjunto
 matplotlib.use('Agg')  # Usar backend sin GUI
 
 
@@ -116,24 +117,46 @@ def correos_enviados_view(request):
 # Vista para ver un correo
 @login_required
 def ver_correo(request, correo_id):
+    # Obtener el correo por su ID
     correo = Correo.objects.get(id=correo_id)
+
+    # Verificar si el usuario es el destinatario y marcar como leído si aún no lo está
     if correo.destinatario == request.user and not correo.leido:
         correo.leido = True
         correo.save()
-    return render(request, 'emails/ver_correo.html', {'correo': correo})
+
+    # Obtener los archivos adjuntos relacionados con este correo
+    archivos_adjuntos = correo.archivos_adjuntos.all()
+
+    # Pasar los archivos adjuntos al contexto de la plantilla
+    return render(request, 'emails/ver_correo.html', {
+        'correo': correo,
+        'archivos_adjuntos': archivos_adjuntos
+    })
+
 
 @login_required
 def redactar_correo(request):
     if request.method == "POST":
-        form = RedactarCorreoForm(request.POST,usuario_actual=request.user)
+        form = RedactarCorreoForm(request.POST, request.FILES, usuario_actual=request.user)
         if form.is_valid():
             correo = form.save(commit=False)
-            correo.remitente = request.user  # Asignar el remitente al usuario logueado
-            correo.save()  # Guardar el correo
+            correo.remitente = request.user
+            correo.save()
+
+            # Guardar los archivos adjuntos
+            archivos = request.FILES.getlist('archivos_adjuntos')
+            for archivo in archivos:
+                ArchivoAdjunto.objects.create(
+                    correo=correo,
+                    nombre_archivo=archivo.name,
+                    ruta_archivo=archivo
+                )
+
             return redirect('inbox')  # Redirigir a la bandeja de entrada
     else:
         form = RedactarCorreoForm(usuario_actual=request.user)
-    
+
     return render(request, 'emails/redactar_correo.html', {'form': form})
 
 
